@@ -39,8 +39,13 @@ public class BooksActivity extends AppCompatActivity {
 	}
 	
 	private void createObservable() {
-		Observable<List<String>> booksObservable = Observable.fromCallable(() -> restClient.getFavouriteBooks());
-		bookSubscription = booksObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(strings -> displayBooks(strings));
+		Observable<List<String>> booksObservable = Observable
+				.fromCallable(() -> restClient.getFavouriteBooks());
+
+		bookSubscription = booksObservable
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(strings -> displayBooks(strings));
 	}
 	
 	private void displayBooks(List<String> books) {

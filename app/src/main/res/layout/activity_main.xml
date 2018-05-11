@@ -16,16 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="Second"
-
-        />
+        android:text="Second" />
 
     <Button
         android:id="@+id/third"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="Third"
+        android:text="Third" />
 
-        />
+    <Button
+        android:id="@+id/fourth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Fourth" />
 </LinearLayout>

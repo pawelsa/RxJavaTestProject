@@ -15,51 +15,53 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RxJavaSimpleActivity extends AppCompatActivity {
-	
-	CompositeDisposable disposable=new CompositeDisposable();
-	public int value=0;
-	
-	final Observable<Integer> serverDownloadObservable=Observable.create(emitter->{
-		SystemClock.sleep(10000);
-		emitter.onNext(5);
-		emitter.onComplete();
-	});
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_rx_java_simple);
-		
-		View view = findViewById(R.id.button);
-		view.setOnClickListener(v -> {
-			v.setEnabled(false);
-			
-			Disposable subscribe= serverDownloadObservable.
-					observeOn(AndroidSchedulers.mainThread()).
-					subscribeOn(Schedulers.io()).
-					subscribe(integer -> {
-						updateUserInterface(integer);
-						v.setEnabled(true);
-					});
-			disposable.add(subscribe);
-		});
-	}
-	
-	private void updateUserInterface(int integer){
-		TextView textView=findViewById(R.id.resultView);
-		textView.setText(String.valueOf(integer));
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if (disposable!=null && !disposable.isDisposed()){
-			disposable.dispose();
-		}
-	}
-	
-	public void onClick(View view){
-		Toast.makeText(this, "Still active: "+value++, Toast.LENGTH_SHORT).show();
-	}
+
+    CompositeDisposable disposable = new CompositeDisposable();
+    public int value = 0;
+
+    final Observable<Integer> serverDownloadObservable = Observable.create(emitter -> {
+        SystemClock.sleep(5000);
+        emitter.onNext(5);
+        SystemClock.sleep(5000);
+        emitter.onNext(3);
+        emitter.onComplete();
+    });
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rx_java_simple);
+
+        View view = findViewById(R.id.button);
+        view.setOnClickListener(v -> {
+            v.setEnabled(false);
+
+            Disposable subscribe = serverDownloadObservable.
+                    observeOn(AndroidSchedulers.mainThread()).
+                    subscribeOn(Schedulers.io()).
+                    subscribe(integer -> {
+                        updateUserInterface(integer);
+                        v.setEnabled(true);
+                    });
+            disposable.add(subscribe);
+        });
+    }
+
+    private void updateUserInterface(int integer) {
+        TextView textView = findViewById(R.id.resultView);
+        textView.setText(String.valueOf(integer));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+    }
+
+    public void onClick(View view) {
+        Toast.makeText(this, "Still active: " + value++, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".RxJavaSimpleActivity" />
         <activity android:name=".BooksActivity" />
-        <activity android:name=".ColorsActivity"></activity>
+        <activity android:name=".ColorsActivity" />
+        <activity android:name=".SchedulerActivity" />
     </application>
 
 </manifest>
